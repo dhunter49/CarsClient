@@ -1,13 +1,30 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router';
-import { getCarById } from '../services/carService';
+import { useNavigate, useParams } from 'react-router';
+import { deleteCar, getCarById } from '../services/carService';
 import type { Car } from '../models/Car';
 
 export default function CarDetailsPage() {
     const { id } = useParams<{ id: string }>();
+    const navigate = useNavigate();
     const [car, setCar] = useState<Car | null>(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [isDeleting, setIsDeleting] = useState(false);
     const [error, setError] = useState<string | null>(null);
+
+    async function handleDelete() {
+        if (!id || !window.confirm('Czy na pewno chcesz usunąć ten samochód?')) {
+            return;
+        }
+
+        try {
+            setIsDeleting(true);
+            await deleteCar(id);
+            navigate('/cars');
+        } catch (caughtError) {
+            setError(caughtError instanceof Error ? caughtError.message : 'Nieznany błąd');
+            setIsDeleting(false);
+        }
+    }
 
     useEffect(() => {
         if (!id) {
@@ -76,7 +93,10 @@ export default function CarDetailsPage() {
             <p>Pojemność bagażnika: {car.luggageCapacity} litrów</p>
             <p>Pojemność silnika: {car.engineCapacity} cm³</p>
             <p>Średnie zużycie paliwa: {car.averageFuelConsumption} l/100km</p>
-            <p>Typ nadwozia: {car.bodyType}</p>       
+            <p>Typ nadwozia: {car.bodyType}</p>  
+            <button type="button" onClick={handleDelete} disabled={isDeleting}>
+                {isDeleting ? 'Usuwanie...' : 'Usuń'}
+            </button>
         </div>
     );
 }
