@@ -1,28 +1,41 @@
 {
-    "cars": [
-        {
-            "id": "1",
-            "brand": "Toyota",
-            "model": "Corolla",
-            "doorsNumber": 5,
-            "luggageCapacity": 470,
-            "engineCapacity": 1800,
-            "fuelType": 1,
-            "productionDate": "2022-05-10",
-            "averageFuelConsumption": 6.4,
-            "bodyType": 1
-        },
-        {
-            "id": "2",
-            "brand": "Skoda",
-            "model": "Octavia",
-            "doorsNumber": 5,
-            "luggageCapacity": 600,
-            "engineCapacity": 1500,
-            "fuelType": 1,
-            "productionDate": "2021-03-15",
-            "averageFuelConsumption": 6.8,
-            "bodyType": 1
-        }
-    ]
+  "cars": [
+    {
+      "id": "1",
+      "brand": "Toyota",
+      "model": "Corolla",
+      "doorsNumber": 5,
+      "luggageCapacity": 470,
+      "engineCapacity": 1800,
+      "fuelType": 1,
+      "productionDate": "2022-05-10",
+      "averageFuelConsumption": 6.4,
+      "bodyType": 1
+    },
+    {
+      "brand": "Suzuki",
+      "model": "Swift",
+      "doorsNumber": 5,
+      "luggageCapacity": 10,
+      "engineCapacity": 40,
+      "averageFuelConsumption": 6,
+      "productionDate": "2023-01-01",
+      "bodyType": 3,
+      "fuelType": 0,
+      "id": "67V5nLodqEA"
+    },
+    {
+      "brand": "sd",
+      "model": "xz",
+      "doorsNumber": 2,
+      "luggageCapacity": 3,
+      "engineCapacity": 23,
+      "averageFuelConsumption": 6.9,
+      "productionDate": "2100-03-21",
+      "bodyType": 0,
+      "fuelType": 0,
+      "id": "O_aIZ03yyCM"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

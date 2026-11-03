@@ -46,18 +46,18 @@ export default function CarsPage() {
     }, []);
 
     if (isLoading) {
-        return <p>Ładowanie...</p>;
+        return <p className="page">Ładowanie...</p>;
     }
 
     if (error) {
-        return <p className="error">Błąd: {error}</p>;
+        return <p className="page error">Błąd: {error}</p>;
     }
 
     if(cars.length === 0) {
         return (
-            <div>
+            <div className="page">
                 <p>Brak samochodów do wyświetlenia.</p>
-                <Link to="/create-car">Dodaj nowy samochód</Link>
+                <Link to="/cars/new">Dodaj nowy samochód</Link>
             </div>
         );
     }

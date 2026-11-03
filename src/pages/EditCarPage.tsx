@@ -2,10 +2,8 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
 import { getCarById, updateCar } from "../services/carService";
 import { 
-    BodyType,
     bodyTypeNames,
     bodyTypes,
-    FuelType,
     fuelTypeNames,
     fuelTypes,
     type Car } from "../models/Car";
@@ -65,22 +63,22 @@ export default function EditCarPage() {
     }, [id]);
     
     if (loading) {
-        return <p>Ładowanie danych samochodu...</p>;
+        return <p className="page">Ładowanie danych samochodu...</p>;
     }
 
     if (error) {
-        return <p style={{ color: "red" }}>{error}</p>;
+        return <p className="page error">{error}</p>;
     }
     
     if (!car) {
-        return <p>Nie znaleziono samochodu o podanym ID.</p>;
+        return <p className="page">Nie znaleziono samochodu o podanym ID.</p>;
     }
 
     return (
-        <div>
+        <section className="page">
             <h1>Edytuj samochód</h1>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            <form onSubmit={handleSubmit}>
+            {error && <p className="error">{error}</p>}
+            <form className="data-form" onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="brand">Marka:</label>
                     <input type="text" id="brand" name="brand" defaultValue={car?.brand} required />
@@ -107,7 +105,7 @@ export default function EditCarPage() {
                 </div>
                 <div>
                     <label htmlFor="averageFuelConsumption">Średnie zużycie paliwa (l/100km):</label>
-                    <input type="number" id="averageFuelConsumption" name="averageFuelConsumption" defaultValue={car?.averageFuelConsumption} required />
+                    <input type="number" id="averageFuelConsumption" name="averageFuelConsumption" step="any" defaultValue={car?.averageFuelConsumption} required />
                 </div>
                 <div>
                     <label htmlFor="bodyType">Typ nadwozia:</label>
@@ -133,6 +131,6 @@ export default function EditCarPage() {
                     {isSubmitting ? 'Aktualizowanie...' : 'Zaktualizuj samochód'}
                 </button>
             </form>
-        </div>
+        </section>
     );
 }

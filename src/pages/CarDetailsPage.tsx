@@ -72,19 +72,19 @@ export default function CarDetailsPage() {
     }, [id]);
 
     if (isLoading) {
-        return <p>Ładowanie...</p>;
+        return <p className="page">Ładowanie...</p>;
     }
     
     if (error) {
-        return <p className="error">Błąd: {error}</p>;
+        return <p className="page error">Błąd: {error}</p>;
     }
 
     if (!car) {
-        return <p>Nie znaleziono samochodu o podanym ID.</p>;
+        return <p className="page">Nie znaleziono samochodu o podanym ID.</p>;
     }
 
     return (
-        <div>
+        <section className="page car-details">
             <h1>Szczegóły samochodu</h1>
             <h2>{car.brand} {car.model}</h2>
             <p>Rok produkcji: {car.productionDate}</p>
@@ -94,12 +94,12 @@ export default function CarDetailsPage() {
             <p>Pojemność silnika: {car.engineCapacity} cm³</p>
             <p>Średnie zużycie paliwa: {car.averageFuelConsumption} l/100km</p>
             <p>Typ nadwozia: {bodyTypeNames[car.bodyType]}</p>
-            <button type="button" onClick={() => navigate(`/edit-car/${car.id}`)}>
+            <button type="button" onClick={() => navigate(`/cars/${car.id}/edit`)}>
                 Edytuj
             </button>
             <button type="button" onClick={handleDelete} disabled={isDeleting}>
                 {isDeleting ? 'Usuwanie...' : 'Usuń'}
             </button>
-        </div>
+        </section>
     );
 }

@@ -43,10 +43,10 @@ export default function CreateCarPage() {
     }
 
     return (
-        <div>
+        <section className="page">
             <h1>Dodaj nowy samochód</h1>
-            {error && <p style={{ color: 'red' }}>{error}</p>}
-            <form onSubmit={handleSubmit}>
+            {error && <p className="error">{error}</p>}
+            <form className="data-form" onSubmit={handleSubmit}>
                 <div>
                     <label htmlFor="brand">Marka:</label>
                     <input type="text" id="brand" name="brand" required />
@@ -73,7 +73,7 @@ export default function CreateCarPage() {
                 </div>
                 <div>
                     <label htmlFor="averageFuelConsumption">Średnie zużycie paliwa (l/100km):</label>
-                    <input type="number" id="averageFuelConsumption" name="averageFuelConsumption" required />
+                    <input type="number" id="averageFuelConsumption" name="averageFuelConsumption" step="any" required />
                 </div>
                 <div>
                     <label htmlFor="bodyType">Typ nadwozia:</label>
@@ -99,6 +99,6 @@ export default function CreateCarPage() {
                     {isSubmitting ? 'Dodawanie...' : 'Dodaj samochód'}
                 </button>
             </form>
-        </div>
+        </section>
     );
 }

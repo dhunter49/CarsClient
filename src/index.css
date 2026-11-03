@@ -1,0 +1,154 @@
+:root {
+    font-family: Arial, sans-serif;
+    color: #222;
+    background: #f4f6f8;
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    min-width: 320px;
+    margin: 0;
+}
+
+a {
+    color: #14a024;
+}
+
+a:hover {
+    color: #0b6e0b;
+}
+
+.site-header {
+    background: #fff;
+    border-bottom: 1px solid #d5dce3;
+}
+
+.site-nav {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.site-nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.25rem;
+    margin: 0;
+    padding: 1rem 0;
+    list-style: none;
+}
+
+.site-nav a {
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.main-content {
+    max-width: 960px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+h1,
+h2 {
+    margin-top: 0;
+}
+
+.page {
+    padding: 1.5rem;
+    background: #fff;
+    border: 1px solid #d5dce3;
+    border-radius: 6px;
+}
+
+.data-form {
+    display: grid;
+    gap: 1rem;
+    max-width: 520px;
+}
+
+.data-form > div {
+    display: grid;
+    gap: 0.35rem;
+}
+
+input,
+select,
+button {
+    min-height: 2.5rem;
+    padding: 0.5rem 0.65rem;
+    font: inherit;
+}
+
+input,
+select {
+    width: 100%;
+    border: 1px solid #aeb8c2;
+    border-radius: 4px;
+    background: #fff;
+}
+
+input:focus,
+select:focus {
+    outline: 2px solid #8ee58b;
+    border-color: #14a014;
+}
+
+button {
+    width: fit-content;
+    border: 0;
+    border-radius: 4px;
+    color: #fff;
+    background: #1ba014;
+    cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+    background: #0b6e0d;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.65;
+}
+
+.error {
+    color: #a32121;
+}
+
+.cars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1rem;
+}
+
+.car-card {
+    padding: 1rem;
+    background: #fff;
+    border: 1px solid #d5dce3;
+    border-radius: 6px;
+}
+
+.car-card h2 {
+    margin-bottom: 0.75rem;
+}
+
+.car-details p {
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e1e6eb;
+}
+
+@media (max-width: 480px) {
+    .main-content {
+        margin: 1rem auto;
+    }
+
+    .page {
+        padding: 1rem;
+    }
+}
