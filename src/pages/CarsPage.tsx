@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 import { getCars } from '../services/carService';
 import { fuelTypeNames, type Car } from '../models/Car';
+import axios from 'axios';
 
 export default function CarsPage() {
     const [cars, setCars] = useState<Car[]>([]);
@@ -18,11 +19,7 @@ export default function CarsPage() {
                 const loadedCars = await getCars(controller.signal);
                 setCars(loadedCars);
             } catch (caughtError) {
-                if (
-                    // Cancelled request
-                    caughtError instanceof DOMException &&
-                    caughtError.name === 'AbortError'
-                ) {
+                if (axios.isCancel(caughtError)) {
                     return;
                 }
                 

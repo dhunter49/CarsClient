@@ -7,6 +7,7 @@ import {
     fuelTypeNames,
     fuelTypes,
     type Car } from "../models/Car";
+import axios from "axios";
 
 export default function EditCarPage() {
     const { id } = useParams<{ id: string }>();
@@ -22,6 +23,9 @@ export default function EditCarPage() {
             const fetchedCar = await getCarById(id!);
             setCar(fetchedCar);
         } catch (caughtError) {
+            if (axios.isCancel(caughtError)) {
+                return;
+            }
             setError(caughtError instanceof Error ? caughtError.message : "Nieznany błąd");
         } finally {
             setLoading(false);

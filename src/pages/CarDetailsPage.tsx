@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { deleteCar, getCarById } from '../services/carService';
 import { bodyTypeNames, fuelTypeNames, type Car } from '../models/Car';
+import axios from 'axios';
 
 export default function CarDetailsPage() {
     const { id } = useParams<{ id: string }>();
@@ -44,11 +45,7 @@ export default function CarDetailsPage() {
                 const loadedCar = await getCarById(carId, controller.signal);
                 setCar(loadedCar);
             } catch (caughtError) {
-                if (
-                    // Cancelled request
-                    caughtError instanceof DOMException &&
-                    caughtError.name === 'AbortError'
-                ) {
+                if (axios.isCancel(caughtError)) {
                     return;
                 }
                 
