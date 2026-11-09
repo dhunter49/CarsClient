@@ -1,15 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { createCar } from '../services/carService';
-import {
-    BodyType,
-    bodyTypeNames,
-    bodyTypes,
-    FuelType,
-    fuelTypeNames,
-    fuelTypes,
-    type NewCar,
-} from '../models/Car';
+import { BodyType, FuelType, type NewCar } from '../models/Car';
+import CarForm from '../components/CarForm';
 
 export default function CreateCarPage() {
     const navigate = useNavigate();
@@ -46,59 +39,11 @@ export default function CreateCarPage() {
         <section className="page">
             <h1>Dodaj nowy samochód</h1>
             {error && <p className="error">{error}</p>}
-            <form className="data-form" onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="brand">Marka:</label>
-                    <input type="text" id="brand" name="brand" required />
-                </div>
-                <div>
-                    <label htmlFor="model">Model:</label>
-                    <input type="text" id="model" name="model" required />
-                </div>
-                <div>
-                    <label htmlFor="productionDate">Data produkcji:</label>
-                    <input type="date" id="productionDate" name="productionDate" required />
-                </div>
-                <div>
-                    <label htmlFor="doorsNumber">Liczba drzwi:</label>
-                    <input type="number" id="doorsNumber" name="doorsNumber" required />
-                </div>
-                <div>
-                    <label htmlFor="luggageCapacity">Pojemność bagażnika (l):</label>
-                    <input type="number" id="luggageCapacity" name="luggageCapacity" required />
-                </div>
-                <div>
-                    <label htmlFor="engineCapacity">Pojemność silnika (cm³):</label>
-                    <input type="number" id="engineCapacity" name="engineCapacity" required />
-                </div>
-                <div>
-                    <label htmlFor="averageFuelConsumption">Średnie zużycie paliwa (l/100km):</label>
-                    <input type="number" id="averageFuelConsumption" name="averageFuelConsumption" step="any" required />
-                </div>
-                <div>
-                    <label htmlFor="bodyType">Typ nadwozia:</label>
-                    <select id="bodyType" name="bodyType" required>
-                        {bodyTypes.map((bodyType) => (
-                            <option key={bodyType} value={bodyType}>
-                                {bodyTypeNames[bodyType]}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                <div>
-                    <label htmlFor="fuelType">Rodzaj paliwa:</label>
-                    <select id="fuelType" name="fuelType" required>
-                        {fuelTypes.map((fuelType) => (
-                            <option key={fuelType} value={fuelType}>
-                                {fuelTypeNames[fuelType]}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                <button type="submit" disabled={isSubmitting}>
-                    {isSubmitting ? 'Dodawanie...' : 'Dodaj samochód'}
-                </button>
-            </form>
+            <CarForm
+                isSubmitting={isSubmitting}
+                submitLabel={isSubmitting ? 'Dodawanie...' : 'Dodaj samochód'}
+                onSubmit={handleSubmit}
+            />
         </section>
     );
 }

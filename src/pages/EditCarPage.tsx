@@ -1,12 +1,9 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router";
 import { getCarById, updateCar } from "../services/carService";
-import { 
-    bodyTypeNames,
-    bodyTypes,
-    fuelTypeNames,
-    fuelTypes,
-    type Car } from "../models/Car";
+import { type Car } from "../models/Car";
+import CarForm from "../components/CarForm";
+import axios from "axios";
 
 export default function EditCarPage() {
     const { id } = useParams<{ id: string }>();
@@ -22,6 +19,9 @@ export default function EditCarPage() {
             const fetchedCar = await getCarById(id!);
             setCar(fetchedCar);
         } catch (caughtError) {
+            if (axios.isCancel(caughtError)) {
+                return;
+            }
             setError(caughtError instanceof Error ? caughtError.message : "Nieznany błąd");
         } finally {
             setLoading(false);
@@ -78,59 +78,12 @@ export default function EditCarPage() {
         <section className="page">
             <h1>Edytuj samochód</h1>
             {error && <p className="error">{error}</p>}
-            <form className="data-form" onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="brand">Marka:</label>
-                    <input type="text" id="brand" name="brand" defaultValue={car?.brand} required />
-                </div>
-                <div>
-                    <label htmlFor="model">Model:</label>
-                    <input type="text" id="model" name="model" defaultValue={car?.model} required />
-                </div>
-                <div>
-                    <label htmlFor="productionDate">Data produkcji:</label>
-                    <input type="date" id="productionDate" name="productionDate" defaultValue={car?.productionDate} required />
-                </div>
-                <div>
-                    <label htmlFor="doorsNumber">Liczba drzwi:</label>
-                    <input type="number" id="doorsNumber" name="doorsNumber" defaultValue={car?.doorsNumber} required />
-                </div>
-                <div>
-                    <label htmlFor="luggageCapacity">Pojemność bagażnika (l):</label>
-                    <input type="number" id="luggageCapacity" name="luggageCapacity" defaultValue={car?.luggageCapacity} required />
-                </div>
-                <div>
-                    <label htmlFor="engineCapacity">Pojemność silnika (cm³):</label>
-                    <input type="number" id="engineCapacity" name="engineCapacity" defaultValue={car?.engineCapacity} required />
-                </div>
-                <div>
-                    <label htmlFor="averageFuelConsumption">Średnie zużycie paliwa (l/100km):</label>
-                    <input type="number" id="averageFuelConsumption" name="averageFuelConsumption" step="any" defaultValue={car?.averageFuelConsumption} required />
-                </div>
-                <div>
-                    <label htmlFor="bodyType">Typ nadwozia:</label>
-                    <select id="bodyType" name="bodyType" defaultValue={car?.bodyType} required>
-                        {bodyTypes.map((bodyType) => (
-                            <option key={bodyType} value={bodyType}>
-                                {bodyTypeNames[bodyType]}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                <div>
-                    <label htmlFor="fuelType">Rodzaj paliwa:</label>
-                    <select id="fuelType" name="fuelType" defaultValue={car?.fuelType} required>
-                        {fuelTypes.map((fuelType) => (
-                            <option key={fuelType} value={fuelType}>
-                                {fuelTypeNames[fuelType]}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-                <button type="submit" disabled={isSubmitting}>
-                    {isSubmitting ? 'Aktualizowanie...' : 'Zaktualizuj samochód'}
-                </button>
-            </form>
+            <CarForm
+                car={car}
+                isSubmitting={isSubmitting}
+                submitLabel={isSubmitting ? 'Aktualizowanie...' : 'Zaktualizuj samochód'}
+                onSubmit={handleSubmit}
+            />
         </section>
     );
 }
