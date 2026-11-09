@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { deleteCar, getCarById } from '../services/carService';
-import { bodyTypeNames, fuelTypeNames, type Car } from '../models/Car';
+import type { Car } from '../models/Car';
+import CarDetails from '../components/CarDetails';
 import axios from 'axios';
 
 export default function CarDetailsPage() {
@@ -81,22 +82,11 @@ export default function CarDetailsPage() {
     }
 
     return (
-        <section className="page car-details">
-            <h1>Szczegóły samochodu</h1>
-            <h2>{car.brand} {car.model}</h2>
-            <p>Rok produkcji: {car.productionDate}</p>
-            <p>Rodzaj paliwa: {fuelTypeNames[car.fuelType]}</p>
-            <p>Liczba drzwi: {car.doorsNumber}</p>
-            <p>Pojemność bagażnika: {car.luggageCapacity} litrów</p>
-            <p>Pojemność silnika: {car.engineCapacity} cm³</p>
-            <p>Średnie zużycie paliwa: {car.averageFuelConsumption} l/100km</p>
-            <p>Typ nadwozia: {bodyTypeNames[car.bodyType]}</p>
-            <button type="button" onClick={() => navigate(`/cars/${car.id}/edit`)}>
-                Edytuj
-            </button>
-            <button type="button" onClick={handleDelete} disabled={isDeleting}>
-                {isDeleting ? 'Usuwanie...' : 'Usuń'}
-            </button>
-        </section>
+        <CarDetails
+            car={car}
+            isDeleting={isDeleting}
+            onEdit={() => navigate(`/cars/${car.id}/edit`)}
+            onDelete={handleDelete}
+        />
     );
 }

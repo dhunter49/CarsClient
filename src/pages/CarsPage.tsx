@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router';
 import { getCars } from '../services/carService';
-import { fuelTypeNames, type Car } from '../models/Car';
+import type { Car } from '../models/Car';
+import CarCard from '../components/CarCard';
 import axios from 'axios';
 
 export default function CarsPage() {
@@ -62,12 +63,7 @@ export default function CarsPage() {
     return (
         <section className="cars-grid">
             {cars.map((car) => (
-                <article key={car.id} className="car-card">
-                    <h2>{car.brand} {car.model}</h2>
-                    <p>Rok produkcji: {car.productionDate}</p>
-                    <p>Rodzaj paliwa: {fuelTypeNames[car.fuelType]}</p>
-                    <Link to={`/cars/${car.id}`}>Szczegóły</Link>
-                </article>
+                <CarCard key={car.id} car={car} />
             ))}
         </section>
     );
