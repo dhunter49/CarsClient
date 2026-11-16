@@ -34,7 +34,7 @@ export default function RegisterPage() {
             if (caughtError instanceof Error) {
                 setError(caughtError.message);
             } else {
-                setError('An unknown error occurred.');
+                setError('Wystąpił nieznany błąd.');
             }
         } finally {
             setIsSubmitting(false);
