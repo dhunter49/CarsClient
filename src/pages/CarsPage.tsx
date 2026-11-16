@@ -5,6 +5,7 @@ import type { Car } from '../models/Car';
 import CarCard from '../components/CarCard';
 import { useCarUiStore } from '../store/useCarUiStore';
 import axios from 'axios';
+import { useAuthStore } from '../store/useAuthStore';
 
 export default function CarsPage() {
     const [cars, setCars] = useState<Car[]>([]);
@@ -14,7 +15,15 @@ export default function CarsPage() {
     const setSearchTerm = useCarUiStore((state) => state.setSearchTerm);
     const showFavoritesOnly = useCarUiStore((state) => state.showFavoritesOnly);
     const setShowFavoritesOnly = useCarUiStore((state) => state.setShowFavoritesOnly);
-    const favoriteCarIds = useCarUiStore((state) => state.favoriteCarIds);
+    const favoriteCarIdsByUser =
+        useCarUiStore(
+            (state) =>
+                state.favoriteCarIdsByUser,
+        );
+    const user = useAuthStore((state) => state.user);
+    const favoriteCarIds = user
+        ? favoriteCarIdsByUser[user.id] ?? []
+        : [];
 
     const normalizedSearch = searchTerm.trim().toLowerCase();
     const visibleCars = cars.filter((car) => {

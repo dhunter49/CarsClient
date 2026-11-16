@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router';
 import { fuelTypeNames, type Car } from '../models/Car';
 import { useCarUiStore } from '../store/useCarUiStore';
+import { useAuthStore } from '../store/useAuthStore';
 
 interface CarCardProps {
     car: Car;
@@ -8,10 +9,16 @@ interface CarCardProps {
 
 export default function CarCard({ car }: CarCardProps) {
     const navigate = useNavigate();
-    const isFavorite =
-        useCarUiStore(
-            (state) => state.favoriteCarIds.includes(car.id),
-        );
+    const user = useAuthStore((state) => state.user);
+
+    const favoriteCarIdsByUser = useCarUiStore(
+        (state) => state.favoriteCarIdsByUser,
+    );
+
+    const favoriteCarIds = user
+        ? favoriteCarIdsByUser[user.id] ?? []
+        : [];
+    const isFavorite = favoriteCarIds.includes(car.id);
 
     const toggleFavorite =
         useCarUiStore(
@@ -26,7 +33,11 @@ export default function CarCard({ car }: CarCardProps) {
             <button
                 type="button"
                 className={isFavorite ? 'favorite-button active-favorite' : 'favorite-button'}
-                onClick={() => toggleFavorite(car.id)}
+                onClick={() => {
+                    if (user) {
+                        toggleFavorite(user.id, car.id);
+                    }
+                }}
             >
                 {isFavorite ? 'Ulubiony' : 'Ulubione'}
             </button>

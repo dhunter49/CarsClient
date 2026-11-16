@@ -4,6 +4,7 @@ interface CarDetailsProps {
     car: Car;
     isDeleting: boolean;
     isFavorite: boolean;
+    isAdmin: boolean;
     onEdit: () => void;
     onDelete: () => void;
     onToggleFavorite: () => void;
@@ -13,6 +14,7 @@ export default function CarDetails({
     car,
     isDeleting,
     isFavorite,
+    isAdmin,
     onEdit,
     onDelete,
     onToggleFavorite,
@@ -38,9 +40,11 @@ export default function CarDetails({
             <button type="button" onClick={onEdit}>
                 Edytuj
             </button>
-            <button type="button" onClick={onDelete} disabled={isDeleting}>
-                {isDeleting ? 'Usuwanie...' : 'Usuń'}
-            </button>
+            {isAdmin && (
+                <button type="button" onClick={onDelete} disabled={isDeleting}>
+                    {isDeleting ? 'Usuwanie...' : 'Usuń'}
+                </button>
+            )}
         </section>
     );
 }
